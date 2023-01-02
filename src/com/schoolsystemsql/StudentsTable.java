@@ -8,13 +8,6 @@ import java.util.Scanner;
 
 public class StudentsTable {
 	
-	public static void topTenStudents() {
-		
-	}
-	
-    public static void topFifteenSubjects() {
-	}
-    
 	  // the way of creating table in database using java code
     public static boolean isStudentsTableCreated() {
 		
@@ -55,23 +48,27 @@ public class StudentsTable {
 	}
     
  // the way of inserting data in database using java code
-    public static void addFakeStudents(int noOfArguments) {
+    public static void addFakeStudents(long noOfArguments) {
     	
     	Scanner in= new Scanner(System.in);
     	
     	String url = "jdbc:mysql://localhost:3306/schoolmgt";
 		 String user = "root";
 	     String pass = "10@104Ar$"; 
+
 	     
 	     for(int i=0;i<=noOfArguments;i++) {
-	        int id =i;
-	        String fname ="najateez";
-	        String lname ="alkhatri";
+	    	//to get random value of id(between 0 to 100).
+	    	int min=0;
+		    int max=100;
+		    int id = (int)Math.floor(Math.random()*(max-min+1)+min); 
+	        String fname ="najat";
+	        String lname ="salim";
 	        String  birthdate ="1996-06-08";
 	        
 	        // Inserting data in database
-            String q1 = "insert into students values('" +id+ "', '" +fname+
-                                  "', '" +lname+ "', '" +birthdate+ "')";
+            String q1 = "insert into students values('" +id+ "', '" +(fname+i)+
+                                  "', '" +(lname+i)+ "', '" +birthdate+ "')";
             
             Connection con = null;
             
@@ -90,8 +87,7 @@ public class StudentsTable {
              // Executing query
              int m = st.executeUpdate(q1);
              if (m >=  1)
-                 System.out.println(
-                         "inserted successfully : " + q1);
+                 System.out.println("inserted successfully : " + q1);
              else
                  System.out.println("insertion failed");
 
@@ -106,12 +102,19 @@ public class StudentsTable {
          }
 	     }
 }
+    
+    public static void topTenStudents() {
+    	
+    }
+	
+	
 
 	
 	public static void main(String[] args) {
 		
 		isStudentsTableCreated();
-		addFakeStudents(29);
+		addFakeStudents(100);
+	
 		
 	}
 

@@ -1,8 +1,10 @@
 package com.schoolsystemsql;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
 
@@ -103,17 +105,48 @@ public class StudentsTable {
 	     }
 }
     
-    public static void topTenStudents() {
+    public static void topTenStudents(int top10Students) {
     	
-    }
-	
-	
+    	    String url = "jdbc:mysql://localhost:3306/schoolmgt";
+		    String user = "root";
+	        String pass = "10@104Ar$";
+	    
+			Scanner in = new Scanner(System.in);
+			
+			int count = 0;
+			Connection con = null;
+			
+			try {
+				 Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+				 DriverManager.registerDriver(driver);
+				 con = DriverManager.getConnection(url, user, pass);
+				 Statement st = con.createStatement();
+				 
+				 //as mr explaination on board
+				 String sql = "SELECT * FROM students";
+				 ResultSet rs = st.executeQuery(sql);  //ResultSet class import from library
+				 
+				while (rs.next() && count < top10Students) {
+					int id = rs.getInt("id");
+					String fname = rs.getString("fname");
+					String lname = rs.getString("lname");
+					Date birthdate = rs.getDate("birthdate");
+					
+					System.out.println(id + " " + fname+ " " + lname +" " + birthdate + " ");
+					count++;
+				 }
+				con.close();
+			}catch (Exception ex) {
+				System.err.println(ex);
+			}
+		}
 
-	
 	public static void main(String[] args) {
 		
 		isStudentsTableCreated();
+		topTenStudents(10);
 		addFakeStudents(100);
+		
 	
 		
 	}

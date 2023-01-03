@@ -1,8 +1,10 @@
 package com.schoolsystemsql;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
 
@@ -11,9 +13,8 @@ public class SubjectsTable {
 	// the way of creating table in database using java code
     public static boolean isSubjectsTableCreated() {
 		
-
-		String url = "jdbc:mysql://localhost:3306/schoolmgt";
-		
+    	
+		 String url = "jdbc:mysql://localhost:3306/schoolmgt";
 		 String user = "root";
 	     String pass = "10@104Ar$"; 
 			
@@ -104,6 +105,42 @@ public class SubjectsTable {
 	     }
 }
     
+    public static void top15Subjects(int top15Subjects) {
+    	
+	    String url = "jdbc:mysql://localhost:3306/schoolmgt";
+	    String user = "root";
+        String pass = "10@104Ar$";
+    
+		Scanner in = new Scanner(System.in);
+		
+		int count = 0;
+		Connection con = null;
+		
+		try {
+			 Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+			 DriverManager.registerDriver(driver);
+			 con = DriverManager.getConnection(url, user, pass);
+			 Statement st = con.createStatement();
+			 
+			 //as mr explaination on board
+			 String sql = "SELECT * FROM subjects";
+			 ResultSet rs = st.executeQuery(sql);  //ResultSet class import from library
+			 
+			while (rs.next() && count < top15Subjects) {
+				int Subject_id = rs.getInt("Subject_id");
+				String title = rs.getString("title");
+				String descc = rs.getString("descc");
+				float pricePerStudent = rs.getFloat("pricePerStudent");
+				
+				System.out.println(Subject_id + " " + title + " " + descc +" " + pricePerStudent + " ");
+				count++;
+			 }
+			con.close();
+		}catch (Exception ex) {
+			System.err.println(ex);
+		}
+	}
+    
     public static void topFifteenSubjects() {
 	//	String topFifteenSubjectsSql="SELECT * FROM Subjects limit 15";
 	}
@@ -111,6 +148,7 @@ public class SubjectsTable {
 	public static void main(String[] args) {
 		
 		isSubjectsTableCreated();
+		top15Subjects(2);
 		addFakeSubjects(100);
 		
 

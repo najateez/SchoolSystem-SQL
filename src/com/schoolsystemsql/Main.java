@@ -1,21 +1,86 @@
 package com.schoolsystemsql;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
 
 public class Main {
 	
-	public static void top100Students() {
-	//	String top50SubjectsSql="SELECT * FROM Students LIMIT 10";
-	}
+	public static void top100Students(int readTop100Student) {
+		
+		 String url = "jdbc:mysql://localhost:3306/schoolmgt";
+		    String user = "root";
+	        String pass = "10@104Ar$";
+	    
+			Scanner in = new Scanner(System.in);
+			
+			int count = 0;
+			Connection con = null;
+			
+			try {
+				 Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+				 DriverManager.registerDriver(driver);
+				 con = DriverManager.getConnection(url, user, pass);
+				 Statement st = con.createStatement();
+				 
+				 //as mr explaination on board
+				 String sql = "SELECT * FROM students";
+				 ResultSet rs = st.executeQuery(sql);  //ResultSet class import from library
+				 
+				while (rs.next() && count < readTop100Student) {
+					int id = rs.getInt("id");
+					String fname = rs.getString("fname");
+					String lname = rs.getString("lname");
+					Date birthdate = rs.getDate("birthdate");
+					
+					System.out.println(id + " " + fname+ " " + lname +" " + birthdate + " ");
+					count++;
+				 }
+				con.close();
+			}catch (Exception ex) {
+				System.err.println(ex);
+			}
+		}
+
+	public static void top50Subjects(int readTop50Subjects) {
 	
-	
-	public static void top50Subjects() {
-	//	String top50SubjectsSql="SELECT * FROM Subjects LIMIT 50";
-	}
+		 String url = "jdbc:mysql://localhost:3306/schoolmgt";
+		    String user = "root";
+	        String pass = "10@104Ar$";
+	    
+			Scanner in = new Scanner(System.in);
+			
+			int count = 0;
+			Connection con = null;
+			
+			try {
+				 Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+				 DriverManager.registerDriver(driver);
+				 con = DriverManager.getConnection(url, user, pass);
+				 Statement st = con.createStatement();
+				 
+				 //as mr explaination on board
+				 String sql = "SELECT * FROM subjects";
+				 ResultSet rs = st.executeQuery(sql);  //ResultSet class import from library
+				 
+				while (rs.next() && count < readTop50Subjects) {
+					int subject_id = rs.getInt("subject_id");
+					String title = rs.getString("title");
+					String descc = rs.getString("descc");
+					float pricePerStudent = rs.getFloat("pricePerStudent");
+					
+					System.out.println(subject_id + " " + title+ " " + descc +" " + pricePerStudent + " ");
+					count++;
+				 }
+				con.close();
+			}catch (Exception ex) {
+				System.err.println(ex);
+			}
+		}
 	
 	// the way of inserting data in database using java code
     public static void addNewStudent(int noOfArguments) {
@@ -28,8 +93,8 @@ public class Main {
 
 	     
 	     for(int i=0;i<=noOfArguments;i++) {
-	    	 int min=120;
-			 int max=200;
+	    	 int min=201;
+			 int max=400;
 			 int id = (int)Math.floor(Math.random()*(max-min+1)+min);
 	        String fname ="Areen";
 	        String lname ="Hamed";
@@ -81,8 +146,8 @@ public class Main {
 
 	     
 	     for(int i=0;i<=noOfArguments;i++) {
-	    	 int min=201;
-			 int max=300;
+	    	 int min=401;
+			 int max=600;
 			 int Subject_id = (int)Math.floor(Math.random()*(max-min+1)+min);
 	        String title ="PHP";
 	        String descc ="PHP is a script language and interpreter that is freely available and used primarily on Linux Web servers";
@@ -144,16 +209,16 @@ public class Main {
 		
 		switch(option) {
 		case 1:{
-			
+			top100Students(100);
 			break;
 		}case 2:{
-			
+			top50Subjects(50);
 			break;
 		}case 3:{
-			addNewStudent(0);
+			addNewStudent(200);
 			break;
 		}case 4:{
-			addNewSubject(0);
+			addNewSubject(200);
 			break;
 		}case 5:{
 			break;

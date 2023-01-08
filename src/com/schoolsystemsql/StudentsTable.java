@@ -62,7 +62,7 @@ public class StudentsTable {
 	     for(int i=0;i<=noOfArguments;i++) {
 	    	//to get random value of id(between 0 to 100).
 	    	int min=0;
-		    int max=100;
+		    int max=10000;
 		    int id = (int)Math.floor(Math.random()*(max-min+1)+min); 
 	        String fname ="najat";
 	        String lname ="salim";
@@ -76,30 +76,20 @@ public class StudentsTable {
             
         try {
         	 Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
-             // Registering drivers
              DriverManager.registerDriver(driver);
 
-             // Reference to connection interface
-             con = DriverManager.getConnection(url, user,
-                     pass);
-
-             // Creating a statement/query
+             con = DriverManager.getConnection(url, user, pass);
              Statement st = con.createStatement();
 
-             // Executing query
              int m = st.executeUpdate(q1);
              if (m >=  1)
                  System.out.println("inserted successfully : " + q1);
              else
                  System.out.println("insertion failed");
 
-             // Closing the connections
              con.close();
-         }
-
-         // Catch block to handle exceptions
-         catch (Exception ex) {
-             // Display message when exceptions occurs
+             
+         }catch (Exception ex) {
              System.err.println(ex);
          }
 	     }
@@ -143,12 +133,41 @@ public class StudentsTable {
 
 	public static void main(String[] args) {
 		
-		isStudentsTableCreated();
-		topTenStudents(10);
-		addFakeStudents(100);
+		Scanner in=new Scanner(System.in);
 		
-	
+		while(true) {
+		System.out.println("School system sql (Student) :");
+		System.out.println("Menu:");
+		System.out.println("1- Create students table.");
+		System.out.println("2- Add fake students. exp:(100)");
+		System.out.println("3- Select top 10 students.");
+		System.out.println("4- Exit.");
+		System.out.println("*******************************");
+		System.out.println("enter a number from menu above:");
+		int option=in.nextInt();
 		
+		switch(option) {
+		case 1:{
+		  isStudentsTableCreated();
+		  System.out.println("*******************************");
+		break;
+		}case 2:{
+	      addFakeStudents(100);
+	      System.out.println("*******************************");
+		break;
+		}case 3:{
+		  topTenStudents(10);
+		  System.out.println("*******************************");
+		break;
+		}case 4:{
+		return;		
+		}default:{
+			System.out.println("it is not an option, try again.");
+			System.out.println("*******************************");
+		}
+
+		}
+	}
 	}
 
 }

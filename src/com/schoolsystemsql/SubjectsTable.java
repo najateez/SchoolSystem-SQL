@@ -53,6 +53,8 @@ public class SubjectsTable {
  // the way of inserting data in database using java code
     public static void addFakeSubjects(long noOfArguments) {
     	
+    	long start=System.currentTimeMillis();
+    	
     	Scanner in= new Scanner(System.in);
     	
     	String url = "jdbc:mysql://localhost:3306/schoolmgt";
@@ -94,6 +96,12 @@ public class SubjectsTable {
              System.err.println(ex);
          }
 	     }
+	     
+         long finish=System.currentTimeMillis();
+	     
+	     long timeElapsed= finish-start;
+	     
+	     System.out.println("count time elapsed for a process= "+timeElapsed); //the time takes while execute the code
 }
     
     public static void top15Subjects(int top15Subjects) {
@@ -123,7 +131,7 @@ public class SubjectsTable {
 				String descc = rs.getString("descc");
 				float pricePerStudent = rs.getFloat("pricePerStudent");
 				
-				System.out.println(Subject_id + " " + title + " " + descc +" " + pricePerStudent + " ");
+				System.out.println("Subject id:"+Subject_id + ", title:" + title + ", description:" + descc +", pricePerStudent:" + pricePerStudent + " ");
 				count++;
 			 }
 			con.close();
@@ -140,7 +148,7 @@ public class SubjectsTable {
 			System.out.println("School system sql (Subject) :");
 			System.out.println("Menu:");
 			System.out.println("1- Create subjects table.");
-			System.out.println("2- Add fake subjects.");
+			System.out.println("2- Add (100) fake subjects.");
 			System.out.println("3- Select top 15 subjects.");
 			System.out.println("4- Exit.");
 			System.out.println("*******************************");

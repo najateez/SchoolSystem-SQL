@@ -37,7 +37,7 @@ public class Main {
 					String lname = rs.getString("lname");
 					Date birthdate = rs.getDate("birthdate");
 					
-					System.out.println(id + " " + fname+ " " + lname +" " + birthdate + " ");
+					System.out.println("id:"+id + ", first name:" + fname+ ", last name:" + lname +", birthdate:" + birthdate + " ");
 					count++;
 				 }
 				con.close();
@@ -73,7 +73,7 @@ public class Main {
 					String descc = rs.getString("descc");
 					float pricePerStudent = rs.getFloat("pricePerStudent");
 					
-					System.out.println(subject_id + " " + title+ " " + descc +" " + pricePerStudent + " ");
+					System.out.println("subject id:"+subject_id + ", title:" + title+ ", description:" + descc +", pricePerStudent:" + pricePerStudent + " ");
 					count++;
 				 }
 				con.close();

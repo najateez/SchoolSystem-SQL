@@ -52,6 +52,8 @@ public class StudentsTable {
  // the way of inserting data in database using java code
     public static void addFakeStudents(long noOfArguments) {
     	
+    	long start=System.currentTimeMillis();
+    	
     	Scanner in= new Scanner(System.in);
     	
     	String url = "jdbc:mysql://localhost:3306/schoolmgt";
@@ -93,7 +95,15 @@ public class StudentsTable {
              System.err.println(ex);
          }
 	     }
+	     
+	     long finish=System.currentTimeMillis();
+	     
+	     long timeElapsed= finish-start;
+	     
+	     System.out.println("count time elapsed for a process= "+timeElapsed); //the time takes to execute the code
 }
+    
+    
     
     public static void topTenStudents(int top10Students) {
     	
@@ -122,7 +132,7 @@ public class StudentsTable {
 					String lname = rs.getString("lname");
 					Date birthdate = rs.getDate("birthdate");
 					
-					System.out.println(id + " " + fname+ " " + lname +" " + birthdate + " ");
+					System.out.println("id:"+id + ", first name:" + fname+ ", last name:" + lname +", birthdate:" + birthdate + " ");
 					count++;
 				 }
 				con.close();
